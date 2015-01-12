@@ -107,8 +107,8 @@ angular.module("ngDraggable", [])
                         $document.off(_releaseEvents, cancelPress);
                     }
                     var onlongpress = function(evt) {
+                         evt.preventDefault();
                         if(! _dragEnabled)return;
-                        evt.preventDefault();
                         element.addClass('dragging');
                         offset = _privoffset(element); 
 
@@ -133,9 +133,8 @@ angular.module("ngDraggable", [])
                     }
 
                     var onmove = function (evt) {
-                        if (!_dragEnabled)return;
                         evt.preventDefault();
-
+                        if (!_dragEnabled)return;
                         _mx = (evt.pageX || evt.touches[0].pageX);
                         _my = (evt.pageY || evt.touches[0].pageY);
 
@@ -153,9 +152,9 @@ angular.module("ngDraggable", [])
                     }
 
                     var onrelease = function(evt) {
+                        evt.preventDefault();
                         if (!_dragEnabled)
                             return;
-                        evt.preventDefault();
                         $rootScope.$broadcast('draggable:end', {x:_mx, y:_my, tx:_tx, ty:_ty, event:evt, element:element, data:_data, callback:onDragComplete, uid: _myid});
                         element.removeClass('dragging');
                         reset();
